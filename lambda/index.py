@@ -19,7 +19,7 @@ def extract_region_from_arn(arn):
 bedrock_client = None
 
 # FastAPIのURLを取得
-FASTAPI_URL = os.environ.get("FASTAPI_URL", ""https://1f1f-34-125-22-118.ngrok-free.app/generate"")
+FASTAPI_URL = os.environ.get("FASTAPI_URL", "https://1f1f-34-125-22-118.ngrok-free.app/generate")
 
 def lambda_handler(event, context):
     try:
@@ -89,7 +89,7 @@ def lambda_handler(event, context):
             "body": json.dumps({
                 "success": True,
                 "response": assistant_response,
-                "conversationHistory": messages
+                "conversationHistory": conversation_history
             })
         }
         
