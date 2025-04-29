@@ -4,6 +4,7 @@ import os
 import boto3
 import urllib.request
 import re  # 正規表現モジュールをインポート
+import time
 from botocore.exceptions import ClientError
 
 
@@ -32,12 +33,14 @@ def lambda_handler(event, context):
         
         print("Processing message:", message)
 
+        # 会話履歴を使用
+        messages = conversation_history.copy()
         # ユーザーメッセージを追加
-        conversation_history.append({"role": "user", "content": message})
+        messages.append({"role": "user", "content": message})
 
         # 会話履歴からプロンプトを生成
         prompt_text = ""
-        for msg in conversation_history:
+        for msg in messages:
             if msg["role"] == "user":
                 prompt_text += f"User: {msg['content']}\n"
             elif msg["role"] == "assistant":
@@ -75,7 +78,7 @@ def lambda_handler(event, context):
         response_time = response_body.get("response_time", round(end_time - start_time, 3))
 
         # アシスタントの応答を会話履歴に追加
-        conversation_history.append({"role": "assistant", "content": assistant_response})
+        messages.append({"role": "assistant", "content": assistant_response})
         
         # 成功レスポンスの返却
         return {
@@ -89,7 +92,7 @@ def lambda_handler(event, context):
             "body": json.dumps({
                 "success": True,
                 "response": assistant_response,
-                "conversationHistory": conversation_history
+                "conversationHistory": messages
             })
         }
         
