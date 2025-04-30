@@ -1,26 +1,26 @@
 # lambda/index.py
 import json
 import os
-import boto3
+# import boto3
 import urllib.request
 import re  # 正規表現モジュールをインポート
 import time
-from botocore.exceptions import ClientError
+# from botocore.exceptions import ClientError
 
 
 # Lambda コンテキストからリージョンを抽出する関数
-def extract_region_from_arn(arn):
-    # ARN 形式: arn:aws:lambda:region:account-id:function:function-name
-    match = re.search('arn:aws:lambda:([^:]+):', arn)
-    if match:
-        return match.group(1)
-    return "us-east-1"  # デフォルト値
+# def extract_region_from_arn(arn):
+#     # ARN 形式: arn:aws:lambda:region:account-id:function:function-name
+#     match = re.search('arn:aws:lambda:([^:]+):', arn)
+#     if match:
+#         return match.group(1)
+#     return "us-east-1"  # デフォルト値
 
 # グローバル変数としてクライアントを初期化（初期値）
-bedrock_client = None
+# bedrock_client = None
 
 # FastAPIのURLを取得
-FASTAPI_URL = os.environ.get("FASTAPI_URL", "https://1f1f-34-125-22-118.ngrok-free.app/generate")
+FASTAPI_URL = os.environ.get("FASTAPI_URL", "https://226a-34-16-146-87.ngrok-free.app/generate")
 
 def lambda_handler(event, context):
     try:
