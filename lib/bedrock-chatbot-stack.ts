@@ -140,13 +140,13 @@ export class BedrockChatbotStack extends cdk.Stack {
     });
 
     // Bedrockへのアクセス権限を追加
-    lambdaRole.addToPolicy(new iam.PolicyStatement({
-      actions: [
-        'bedrock:InvokeModel',
-        'bedrock:InvokeModelWithResponseStream'
-      ],
-      resources: ['*']
-    }));
+    // lambdaRole.addToPolicy(new iam.PolicyStatement({
+    //   actions: [
+    //     'bedrock:InvokeModel',
+    //     'bedrock:InvokeModelWithResponseStream'
+    //   ],
+    //   resources: ['*']
+    // }));
 
     // Lambda function
     const chatFunction = new lambda.Function(this, 'ChatFunction', {
@@ -157,7 +157,7 @@ export class BedrockChatbotStack extends cdk.Stack {
       memorySize: 128,
       role: lambdaRole,
       environment: {
-        MODEL_ID: modelId,
+      FASTAPI_URL: "https://226a-34-16-146-87.ngrok-free.app/generate",
       },
     });
 
@@ -436,10 +436,10 @@ export class BedrockChatbotStack extends cdk.Stack {
       description: 'The URL of the API Gateway endpoint',
     });
 
-    new cdk.CfnOutput(this, 'ModelId', {
-      value: modelId,
-      description: 'The Bedrock model ID being used',
-    });
+    // new cdk.CfnOutput(this, 'ModelId', {
+    //   value: modelId,
+    //   description: 'The Bedrock model ID being used',
+    // });
 
     new cdk.CfnOutput(this, 'UserPoolId', {
       value: userPool.userPoolId,
